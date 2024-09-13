@@ -1,4 +1,5 @@
 import {ThemeProvider} from '@/components/theme-provider'
+import {Toaster} from '@/components/ui/sonner'
 import type {Metadata} from 'next'
 import './globals.css'
 
@@ -21,6 +22,7 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange>
           {children}
+          <Toaster position="top-center" />
         </ThemeProvider>
       </body>
     </html>
