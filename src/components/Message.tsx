@@ -37,6 +37,9 @@ export default function Message({message}: Props) {
             <h1 className="text-sm text-gray-400">
               {new Date(message.created_at).toDateString()}
             </h1>
+            {message.is_edit && (
+              <h1 className="text-sm text-gray-400">edited</h1>
+            )}
           </div>
           {message.users?.id === user?.id && <MessageMenu message={message} />}
         </div>
@@ -61,7 +64,13 @@ const MessageMenu = ({message}: MessageMenuProps) => {
       <DropdownMenuContent>
         <DropdownMenuLabel>Action</DropdownMenuLabel>
         <DropdownMenuSeparator />
-        <DropdownMenuItem>Edit</DropdownMenuItem>
+        <DropdownMenuItem
+          onClick={() => {
+            document.getElementById('trigger-edit')?.click()
+            setActionMessage(message)
+          }}>
+          Edit
+        </DropdownMenuItem>
         <DropdownMenuItem
           onClick={() => {
             document.getElementById('trigger-delete')?.click()

@@ -1,7 +1,7 @@
 'use client'
 
 import Message from '@/components/Message'
-import {DeleteAlert} from '@/components/MessageActions'
+import {DeleteAlert, EditAlert} from '@/components/MessageActions'
 import {useMessage} from '@/lib/store/messages'
 
 export default function ListMessages() {
@@ -17,6 +17,7 @@ export default function ListMessages() {
         })}
       </div>
       <DeleteAlert />
+      <EditAlert />
     </div>
   )
 }
