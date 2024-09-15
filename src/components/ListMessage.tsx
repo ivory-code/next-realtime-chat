@@ -4,6 +4,7 @@ import {ArrowDown} from 'lucide-react'
 import {useEffect, useRef, useState} from 'react'
 import {toast} from 'sonner'
 
+import LoadMoreMessages from '@/components/LoadMoreMessages'
 import Message from '@/components/Message'
 import {DeleteAlert, EditAlert} from '@/components/MessageActions'
 import {type Imessage, useMessage} from '@/lib/store/messages'
@@ -124,16 +125,17 @@ export default function ListMessages() {
   return (
     <>
       <div
-        className="flex-1 flex flex-col p-5 h-full overflow-y-auto"
+        className="flex-1 flex flex-col p-5 h-full overflow-y-auto gap-5"
         ref={scrollRef}
         onScroll={handleOnScroll}>
-        <div className="flex-1" />
+        <div className="flex-1">
+          <LoadMoreMessages />
+        </div>
         <div className="space-y-7">
           {messages.map((value, index) => {
             return <Message key={index} message={value} />
           })}
         </div>
-
         <DeleteAlert />
         <EditAlert />
       </div>
