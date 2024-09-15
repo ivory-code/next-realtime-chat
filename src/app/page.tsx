@@ -2,7 +2,7 @@ import ChatAbout from '@/components/ChatAbout'
 import ChatHeader from '@/components/ChatHeader'
 import ChatInput from '@/components/ChatInput'
 import ChatMessages from '@/components/ChatMessages'
-import InitUser from '@/lib/store/InitUser'
+import InitUsers from '@/lib/store/InitUsers'
 import {supabaseServer} from '@/lib/supabase/server'
 
 export default async function Page() {
@@ -25,7 +25,7 @@ export default async function Page() {
           )}
         </div>
       </div>
-      <InitUser user={data.session?.user} />
+      <InitUsers user={data.session?.user} />
     </>
   )
 }
