@@ -4,11 +4,14 @@ import Message from '@/components/Message'
 import {DeleteAlert, EditAlert} from '@/components/MessageActions'
 import {Imessage, useMessage} from '@/lib/store/messages'
 import {supabaseBrowser} from '@/lib/supabase/browser'
-import {useEffect, useRef} from 'react'
+import {ArrowDown} from 'lucide-react'
+import {useEffect, useRef, useState} from 'react'
 import {toast} from 'sonner'
 
 export default function ListMessages() {
   const scrollRef = useRef<HTMLDivElement>(null)
+  const [hasScrolled, setHasScrolled] = useState(false)
+  const [notification, setNotification] = useState(0)
 
   const {
     messages,
@@ -18,6 +21,32 @@ export default function ListMessages() {
     optimisticUpdateMessage,
   } = useMessage(state => state)
   const supabase = supabaseBrowser()
+
+  const handleOnScroll = () => {
+    const scrollContainer = scrollRef.current
+
+    if (scrollContainer) {
+      const isScroll =
+        scrollContainer.scrollTop <
+        scrollContainer.scrollHeight - scrollContainer.clientHeight - 10
+
+      setHasScrolled(isScroll)
+
+      if (
+        scrollContainer.scrollTop ===
+        scrollContainer.scrollHeight - scrollContainer.clientHeight - 10
+      ) {
+        setNotification(0)
+      }
+    }
+  }
+
+  const scrollDown = () => {
+    if (scrollRef.current?.scrollTop !== undefined) {
+      setNotification(0)
+      scrollRef.current.scrollTop = scrollRef.current.scrollHeight
+    }
+  }
 
   useEffect(() => {
     const channel = supabase
@@ -42,6 +71,15 @@ export default function ListMessages() {
               }
 
               optimisticAddMessage(newMessage as Imessage)
+            }
+            const scrollContainer = scrollRef.current
+            const isScroll =
+              scrollContainer &&
+              scrollContainer.scrollTop <
+                scrollContainer.scrollHeight - scrollContainer.clientHeight - 10
+
+            if (isScroll) {
+              setNotification(current => current + 1)
             }
           }
         },
@@ -70,23 +108,44 @@ export default function ListMessages() {
   useEffect(() => {
     const scrollContainer = scrollRef.current
 
-    if (scrollContainer) {
+    if (scrollContainer && !hasScrolled) {
       scrollContainer.scrollTop = scrollContainer.scrollHeight
     }
   }, [messages])
 
   return (
-    <div
-      className="flex-1 flex flex-col p-5 h-full overflow-y-auto"
-      ref={scrollRef}>
-      <div className="flex-1"></div>
-      <div className="space-y-7">
-        {messages.map((value, index) => {
-          return <Message key={index} message={value} />
-        })}
+    <>
+      <div
+        className="flex-1 flex flex-col p-5 h-full overflow-y-auto"
+        ref={scrollRef}
+        onScroll={handleOnScroll}>
+        <div className="flex-1"></div>
+        <div className="space-y-7">
+          {messages.map((value, index) => {
+            return <Message key={index} message={value} />
+          })}
+        </div>
+
+        <DeleteAlert />
+        <EditAlert />
       </div>
-      <DeleteAlert />
-      <EditAlert />
-    </div>
+      {hasScrolled && (
+        <div className="absolute bottom-20 w-full">
+          {notification ? (
+            <div
+              className="w-36 mx-auto bg-indigo-500 p-1 rounded-md cursor-pointer"
+              onClick={scrollDown}>
+              <h1>New {notification} messages</h1>
+            </div>
+          ) : (
+            <div
+              className="w-10 h-10 bg-blue-500 rounded-full justify-center items-center flex mx-auto border cursor-pointer hover:scale-110 transition-all"
+              onClick={scrollDown}>
+              <ArrowDown />
+            </div>
+          )}
+        </div>
+      )}
+    </>
   )
 }
