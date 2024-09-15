@@ -1,3 +1,6 @@
+import {Ellipsis} from 'lucide-react'
+import Image from 'next/image'
+
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -6,10 +9,9 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdownMenu'
-import {Imessage, useMessage} from '@/lib/store/messages'
+import {type Imessage, useMessage} from '@/lib/store/messages'
 import {useUser} from '@/lib/store/user'
-import {Ellipsis} from 'lucide-react'
-import Image from 'next/image'
+
 import {IMAGES} from '../../public/assets/images'
 
 interface Props {

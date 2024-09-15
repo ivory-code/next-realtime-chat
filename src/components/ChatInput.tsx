@@ -1,11 +1,12 @@
 'use client'
 
+import {toast} from 'sonner'
+import {v4 as uuidv4} from 'uuid'
+
 import {Input} from '@/components/ui/input'
 import {useMessage} from '@/lib/store/messages'
 import {useUser} from '@/lib/store/user'
 import {supabaseBrowser} from '@/lib/supabase/browser'
-import {toast} from 'sonner'
-import {v4 as uuidv4} from 'uuid'
 
 export default function ChatInput() {
   const user = useUser(state => state.user)

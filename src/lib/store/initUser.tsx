@@ -1,8 +1,9 @@
 'use client'
 
-import {useUser} from '@/lib/store/user'
-import {User} from '@supabase/supabase-js'
+import {type User} from '@supabase/supabase-js'
 import {useEffect, useRef} from 'react'
+
+import {useUser} from '@/lib/store/user'
 
 interface Props {
   user?: User
@@ -17,7 +18,7 @@ export default function InitUser({user}: Props) {
     }
 
     initState.current = true
-  }, [])
+  }, [user])
 
   return <></>
 }

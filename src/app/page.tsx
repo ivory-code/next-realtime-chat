@@ -2,7 +2,6 @@ import ChatHeader from '@/components/ChatHeader'
 import ChatInput from '@/components/ChatInput'
 import ChatMessages from '@/components/ChatMessages'
 import InitUser from '@/lib/store/InitUser'
-
 import {supabaseServer} from '@/lib/supabase/server'
 
 export default async function Page() {

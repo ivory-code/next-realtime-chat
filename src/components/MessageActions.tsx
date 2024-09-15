@@ -1,5 +1,8 @@
 'use client'
 
+import {useRef} from 'react'
+import {toast} from 'sonner'
+
 import {
   AlertDialog,
   AlertDialogAction,
@@ -23,8 +26,6 @@ import {
 import {Input} from '@/components/ui/input'
 import {useMessage} from '@/lib/store/messages'
 import {supabaseBrowser} from '@/lib/supabase/browser'
-import {useRef} from 'react'
-import {toast} from 'sonner'
 
 export function DeleteAlert() {
   const actionMessage = useMessage(state => state.actionMessage)
@@ -56,7 +57,7 @@ export function DeleteAlert() {
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>
-        <button id="trigger-delete"></button>
+        <button id="trigger-delete" />
       </AlertDialogTrigger>
       <AlertDialogContent>
         <AlertDialogHeader>
@@ -119,7 +120,7 @@ export function EditAlert() {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <button id="trigger-edit"></button>
+        <button id="trigger-edit" />
       </DialogTrigger>
       <DialogContent className="w-full">
         <DialogHeader>

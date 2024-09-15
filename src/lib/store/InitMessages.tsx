@@ -1,7 +1,8 @@
 'use client'
 
-import {Imessage, useMessage} from '@/lib/store/messages'
 import {useEffect, useRef} from 'react'
+
+import {type Imessage, useMessage} from '@/lib/store/messages'
 
 interface Props {
   messages: Imessage[]
@@ -16,7 +17,7 @@ export default function InitMessages({messages}: Props) {
     }
 
     initState.current = true
-  }, [])
+  }, [messages])
 
   return <></>
 }

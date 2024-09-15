@@ -1,12 +1,13 @@
 'use client'
 
-import Message from '@/components/Message'
-import {DeleteAlert, EditAlert} from '@/components/MessageActions'
-import {Imessage, useMessage} from '@/lib/store/messages'
-import {supabaseBrowser} from '@/lib/supabase/browser'
 import {ArrowDown} from 'lucide-react'
 import {useEffect, useRef, useState} from 'react'
 import {toast} from 'sonner'
+
+import Message from '@/components/Message'
+import {DeleteAlert, EditAlert} from '@/components/MessageActions'
+import {type Imessage, useMessage} from '@/lib/store/messages'
+import {supabaseBrowser} from '@/lib/supabase/browser'
 
 export default function ListMessages() {
   const scrollRef = useRef<HTMLDivElement>(null)
@@ -103,7 +104,14 @@ export default function ListMessages() {
     return () => {
       channel.unsubscribe()
     }
-  }, [messages])
+  }, [
+    messages,
+    optimisticAddMessage,
+    optimisticDeleteMessage,
+    optimisticIds,
+    optimisticUpdateMessage,
+    supabase,
+  ])
 
   useEffect(() => {
     const scrollContainer = scrollRef.current
@@ -111,7 +119,7 @@ export default function ListMessages() {
     if (scrollContainer && !hasScrolled) {
       scrollContainer.scrollTop = scrollContainer.scrollHeight
     }
-  }, [messages])
+  }, [hasScrolled, messages])
 
   return (
     <>
@@ -119,7 +127,7 @@ export default function ListMessages() {
         className="flex-1 flex flex-col p-5 h-full overflow-y-auto"
         ref={scrollRef}
         onScroll={handleOnScroll}>
-        <div className="flex-1"></div>
+        <div className="flex-1" />
         <div className="space-y-7">
           {messages.map((value, index) => {
             return <Message key={index} message={value} />
