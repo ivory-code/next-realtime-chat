@@ -1,3 +1,5 @@
+import ogu from './ogu.webp'
+
 export const IMAGES = {
-  OGU: require('./ogu.webp')
+  OGU: ogu,
 }
