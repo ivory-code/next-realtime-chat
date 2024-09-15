@@ -9,7 +9,7 @@ interface Props {
   user?: User
 }
 
-export default function InitUsers({user}: Props) {
+export default function InitUser({user}: Props) {
   const initState = useRef(false)
 
   useEffect(() => {
